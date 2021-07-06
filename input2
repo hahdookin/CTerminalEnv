@@ -1,0 +1,20 @@
+ #define STRING "Hello there buddys"
+  #  if 0.0
+#define x 100
+#define bad(a, b, c, d) { a, b, c, d }
+#define z(apple, ) hello apple
+#define v(100, 200) bad bad
+#define LOOP(A) for (int i = 0; i < A; i++)
+defined()
+#define __MACRO__ 0xFFAA
+#ifdef __MACRO__  
+#undef __MACRO__
+  #    define NEVER
+  #  endif
+#endif
+// comment here  
+/* multiline
+ * comment here
+*/
+                #              yo there
+#include <hellothere.h>

@@ -25,34 +25,17 @@
 
 #define LEN(arr) (sizeof(arr) / sizeof(arr[0]))
 
+/* Buffer for storing lexemes */
+#define BUF_SIZE (24 * 10)
+
 typedef enum { false, true } bool;
 
 /* Declarations */
 // Peek next char without extracting from stream
-char peekch(FILE *stream);
+extern char peekch(FILE *stream);
 // Random integer in range [-n, n]
-int plusminus(int n);
-// Boolean of percent change of being true
-bool chancepercent(int percent);
-
-/* Defintions */
-char peekch(FILE *stream)
-{
-    char c = fgetc(stream);
-    ungetc(c, stream);
-    return c;
-}
-
-// Boolean of percent change of being true
-bool chancepercent(int percent)
-{
-    return rand() % 100 <= percent;
-}
-
-// Random integer in range [-n, n]
-int plusminus(int n) 
-{ 
-    return n - (rand() % (2 * n + 1));
-}
+extern int plusminus(int n);
+// Boolean of percent chance of being true
+extern bool chancepercent(int percent);
 
 #endif /* UTILS_H */

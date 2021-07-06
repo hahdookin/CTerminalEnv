@@ -3,8 +3,6 @@
 
 #include <stdlib.h>
 
-//#include "utils.h"
-
 /**************************
  *                        *
  * vector API for vec_(T) *
@@ -38,17 +36,12 @@
  *
  * vec_T_grow(vec_T *vec) -> void
  *
- * vec_T_realloc(vec_T *vec, int len) -> void
+ * vec_T_realloc(vec_T *vec, int newsize) -> void
  *
  */
 
 //----------------------------------------------------
 #define vec_(TYPE)\
-    typedef struct {\
-        size_t size_actual;\
-        size_t size;\
-        TYPE *data;\
-    } vec_##TYPE;\
     vec_##TYPE *vec_##TYPE##_create() {\
         vec_##TYPE *ptr = (vec_##TYPE*)malloc(sizeof(vec_##TYPE*));\
         ptr->size = 1;\
@@ -64,10 +57,10 @@
         vec->size *= 2;\
         vec->data = realloc(vec->data, sizeof(TYPE) * vec->size);\
     }\
-    void vec_##TYPE##_realloc(vec_##TYPE *vec, size_t len) {\
-        vec->size = len;\
-        vec->size_actual = len;\
-        vec->data = realloc(vec->data, sizeof(TYPE) * len);\
+    void vec_##TYPE##_realloc(vec_##TYPE *vec, size_t newsize) {\
+        vec->size = newsize;\
+        vec->size_actual = newsize;\
+        vec->data = realloc(vec->data, sizeof(TYPE) * newsize);\
     }\
     void vec_##TYPE##_push(vec_##TYPE *vec, TYPE val) {\
         if (vec->size == vec->size_actual) {\
@@ -102,10 +95,41 @@
             vec_##TYPE##_push(res, src[i]);\
         return res;\
     }
-
+//----------------------------------------------------
+#define vec_proto_(TYPE)\
+    typedef struct {\
+        size_t size_actual;\
+        size_t size;\
+        TYPE *data;\
+    } vec_##TYPE;\
+    extern vec_##TYPE *vec_##TYPE##_create();\
+    extern vec_##TYPE *vec_##TYPE##_from(TYPE* src, size_t size);\
+    extern void vec_##TYPE##_delete(vec_##TYPE *vec);\
+    extern void vec_##TYPE##_grow(vec_##TYPE *vec);\
+    extern void vec_##TYPE##_realloc(vec_##TYPE *vec, size_t newsize);\
+    extern void vec_##TYPE##_push(vec_##TYPE *vec, TYPE val);\
+    extern void vec_##TYPE##_splice(vec_##TYPE *dest, vec_##TYPE *src, size_t start);\
+    extern void vec_##TYPE##_remove(vec_##TYPE* vec, size_t index, size_t delcount);
 //----------------------------------------------------
 
-vec_(char);
+//vec_proto_(char);
+
+typedef struct {
+    size_t size_actual;
+    size_t size;
+    char *data;
+} vec_char;
+
+extern vec_char *vec_char_create();
+extern vec_char *vec_char_from(char* src, size_t size);
+extern vec_char* vec_char_from2(char* src);
+extern void vec_char_delete(vec_char *vec);
+extern void vec_char_grow(vec_char *vec);
+extern void vec_char_realloc(vec_char *vec, size_t newsize);
+extern void vec_char_push(vec_char *vec, char val);
+extern void vec_char_splice(vec_char *dest, vec_char *src, size_t start);
+extern void vec_char_remove(vec_char* vec, size_t index, size_t delcount);
+
 
 /*
 typedef struct {
